@@ -1,0 +1,3 @@
+multisearch.vimball: call delete('/home/sch/.vim/plugin/multisearch.vim')|call delete('/home/sch/.vim/doc/Msearch.txt')
+Align.vba: call delete('/home/sch/.vim/plugin/AlignPlugin.vim')|call delete('/home/sch/.vim/plugin/AlignMapsPlugin.vim')|call delete('/home/sch/.vim/plugin/cecutil.vim')|call delete('/home/sch/.vim/doc/Align.txt')|call delete('/home/sch/.vim/autoload/Align.vim')|call delete('/home/sch/.vim/autoload/AlignMaps.vim')
+rename.vba: call delete('/home/sch/.vim/plugin/rename.vim')

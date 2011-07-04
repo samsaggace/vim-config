@@ -1,0 +1,54 @@
+#!/bin/bash 
+# 
+# Find the deepest folder residing on Git/Subversion.
+#
+# Usage:
+#       vc-find-rootfolder [-v] [another_folder]
+#
+# CC-by-sa-2.0 Cédric Le Dillau <ld dot c at free dot fr>
+#
+SCRIPT_NAME=$( basename $0 )
+
+err=/dev/null
+if [ "$1" == "-v" ]; then
+  err='&2'
+  shift
+fi
+
+# change to specified folder as asked
+if [ -n "$1" ]; then
+    cd "$1" 2>/dev/null || { echo "error: '$1' is not a folder." >$err ; exit 1; }
+fi
+
+# try git before svn 
+if [ -n "$(which git)" ]; then
+    if [ -d .git ]; then 
+        pwd
+        exit 0
+    fi
+    DEPTH=$( git rev-parse --show-cdup 2>/dev/null )
+    if [ $? = 0 ]; then
+        cd $DEPTH; 
+        pwd
+        exit 0
+    fi
+fi
+
+# abort if not already in a SVN folder
+svn info > /dev/null 2>&1 || { echo "error: '$1' is not a SVN folder." >$err ; exit 1; }
+
+here=$( pwd )
+current_url=$( svn info 2>/dev/null| awk '/URL: / {print $2}' )
+cd ..
+parent_url=$( svn info 2>/dev/null | awk '/URL: / {print $2}' )
+
+while [ $( dirname "${current_url}" ) == "${parent_url}" ]; do 
+    here=$PWD
+    current_url=$parent_url
+    cd ..
+    parent_url=$( svn info 2>/dev/null| awk '/URL: / {print $2}' )
+done
+
+echo $here
+exit 0
+# end of file
