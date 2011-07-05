@@ -275,7 +275,7 @@ au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight c_t gui=bold,ita
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_d Tag
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_m Tag
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_e Tag
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent so tags_hl
+au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent call Show80col(1)
 
 "Update tags and syntax highlighting at each save
