@@ -57,7 +57,7 @@ set hlsearch
 set incsearch
 
 " cindent option
-set cinoptions=t0,(0,l1,g0,hs,:0
+set cinoptions=t0,(0,l1,g0,hs,:0,W4
 
 " I starts at the first non-blank character
 set cpoptions+=H
@@ -77,7 +77,9 @@ map <F4>          :TlistToggle<CR>
 map <F5>          ^i/* <C-[>$a */<C-[>
 map <F6>          ^3x$2h3x
 map <F7>          :bdelete<CR>
-map <F9>          :noh<CR>
+map <F8>          :AsyncMake<CR>
+map <F9>          :cp<CR>
+map <F10>         :cn<CR>
 map <C-N>         :noh<CR>
 map <C-Del>       :bdelete<CR>
 map <C-PageUp>    [c
