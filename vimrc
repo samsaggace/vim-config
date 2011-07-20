@@ -159,7 +159,7 @@ endfunction
 "--------------------------------------------------------------------------
 " Omnicompletion, needs tags
 set omnifunc=ccomplete#Complete
-set shiftwidth=4 tabstop=8 expandtab
+set shiftwidth=4 softtabstop=4 tabstop=8 expandtab
 set completeopt=menuone,longest,preview
 
 set tags+=./tags
@@ -258,8 +258,9 @@ noremap K K<CR>
 "-------------------------------------------------------------------------
 " force use of tabs in Makefiles and python
 au BufNewFile,BufRead Makefile*,GNUmakefile*,*.mk,*.mak,makefile*,*.py
-            \ set shiftwidth=4 tabstop=8 noexpandtab
-
+            \ set noexpandtab
+au FileType c,cpp
+            \ set softtabstop=4 expandtab
 " Remove newline added by vim automatically at end-of-file
 set noeol
 
