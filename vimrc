@@ -293,10 +293,12 @@ autocmd BufRead *.json set ft=javascript
 
 let g:JSLintHighlightErrorLine = 1
 
-map <C-\>r :execute "vimgrep /" . expand("<cword>") . "/gj **" <Bar> cw<CR>
+map <C-\>r :silent call MyGrep(expand("<cword>"), '')<CR>
 
-"command -complete=dir -nargs=2 Grep execute "noa vimgrep /<arg0>/gj  "
-"
+function MyGrep(pattern, path)
+    execute 'noa vimgrep /' . a:pattern . '/gj ' . a:path . '/** | cw'
+endfunction
+command -nargs=+ -complete=dir Grep silent call MyGrep(<f-args>)
 
 autocmd BufRead,BufNewFile *.wiki           setfiletype Wiki
 autocmd BufRead,BufNewFile *.wikipedia.org* setfiletype Wiki
