@@ -184,6 +184,18 @@ inoremap <leader><Tab> <Tab>
 "Completion in commands like 
 cnoremap <Tab> <C-L><C-D>
 
+
+"open git gui blame
+function CallGitGuiBlame()
+    let file = bufname('%')
+    let line = line('.')
+    echo 'Calling git gui blame for' . file . ' at line ' . line 
+    execute '!git gui blame  --line=' . line . ' ' . file . ' &' 
+endfunction
+
+command -nargs=0 GGB call CallGitGuiBlame()
+map <Leader>b :GGB<CR> 
+
 " Mini buffer explorer plugin
 " -------------------------------------------------------------------------
 let g:miniBufExplMapWindowNavVim = 1 
@@ -302,6 +314,8 @@ command -nargs=+ -complete=dir Grep silent call MyGrep(<f-args>)
 
 autocmd BufRead,BufNewFile *.wiki           setfiletype Wiki
 autocmd BufRead,BufNewFile *.wikipedia.org* setfiletype Wiki
+
+autocmd BufRead,BufNewFile COMMIT_EDITMSG set spell
 
 " Show trailing whitespace:
 au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /\s\+$/
