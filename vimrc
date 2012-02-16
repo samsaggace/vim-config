@@ -250,6 +250,11 @@ endfunction
 noremap <Leader>rc :call Renamec()<CR> 
 noremap <Leader>rf :call Renamef()<CR> 
 
+"---------------------------------------------------------------------------
+"Switch buffer
+map <C-PageUp> :bN<CR>
+map <C-PageDown> :bn<CR>
+
 
 "-------------------------------------------------------------------------
 
@@ -269,10 +274,12 @@ map ,d           :Dox<CR>
 noremap K K<CR>
 "-------------------------------------------------------------------------
 " force use of tabs in Makefiles and python
-au BufNewFile,BufRead Makefile*,GNUmakefile*,*.mk,*.mak,makefile*,*.py
-            \ set noexpandtab
-au FileType c,cpp
+au FileType *
             \ set softtabstop=4 expandtab
+         
+au FileType make,python
+            \ set noexpandtab
+         
 " Remove newline added by vim automatically at end-of-file
 set noeol
 
@@ -294,8 +301,8 @@ au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent call Show80col(1)
 
 "Update tags and syntax highlighting at each save
-au BufWritePost *.c,*.h Tags
-au BufWritePost *.c,*.h silent cs reset
+au BufWritePost *.c,*.h,*.js* Tags
+au BufWritePost *.c,*.h,*.js* silent cs reset
 au BufWritePost *.c,*.h syntax clear
 au BufWritePost *.c,*.h silent! so tags_hl
 au BufWritePost *.c,*.h runtime syntax/c.vim
@@ -314,19 +321,20 @@ command -nargs=+ -complete=dir Grep silent call MyGrep(<f-args>)
 
 autocmd BufRead,BufNewFile *.wiki           setfiletype Wiki
 autocmd BufRead,BufNewFile *.wikipedia.org* setfiletype Wiki
+autocmd BufRead,BufNewFile *.js set cinoptions-=:0
 
 autocmd BufRead,BufNewFile COMMIT_EDITMSG set spell
 
 " Show trailing whitespace:
-au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /\s\+$/
+au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$/
 " Show trailing whitepace and spaces before a tab:
-au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /\s\+$\| \+\ze\t/
+au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$\| \+\ze\t/
 " Show tabs that are not at the start of a line:
-au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /[^\t]\zs\t\+/
+au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /[^\t]\zs\t\+/
 " Show indent using tab
-au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /^\t\+/
+au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /^\t\+/
 "Show > 80 col 
-"au BufRead,BufNewFile,BufWritePost *.c,*.h syntax match ExtraWhitespace /\%>80v.\+/
+"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\%>80v.\+/
 
 " Show spaces used for indenting (so you use only tabs for indenting).
 "match ExtraWhitespace /^\t*\zs \+/
