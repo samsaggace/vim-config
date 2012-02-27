@@ -252,8 +252,10 @@ noremap <Leader>rf :call Renamef()<CR>
 
 "---------------------------------------------------------------------------
 "Switch buffer
-map <C-PageUp> :bN<CR>
-map <C-PageDown> :bn<CR>
+if !&diff 
+    map <C-PageUp> :bN<CR>
+    map <C-PageDown> :bn<CR>
+endif
 
 
 "-------------------------------------------------------------------------
