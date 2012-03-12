@@ -58,7 +58,7 @@ try
   " C style Preprocessor
   syn region idlIncluded    contained start=+"+  skip=+\\\(\\\\\)*"+  end=+"+
   syn match  idlIncluded    contained "<[^>]*>"
-  syn match  idlInclude     "^[ \t]*#[ \t]*include\>[ \t]*["<]" contains=idlIncluded,idlString
+  syn match  idlInclude     "^[ \t]*\(#[ \t]*include\>\|ng_header\)[ \t]*["<]" contains=idlIncluded,idlString
   syn region idlPreCondit   start="^[ \t]*#[ \t]*\(if\>\|ifdef\>\|ifndef\>\|elif\>\|else\>\|endif\>\)"  skip="\\$"  end="$" contains=idlComment,idlCommentError
   syn region idlDefine      start="^[ \t]*#[ \t]*\(define\>\|undef\>\)" skip="\\$" end="$" contains=idlLiteral,idlString
 
@@ -66,6 +66,7 @@ try
   syn keyword idlConst    const                             skipempty skipwhite nextgroup=idlBaseType,idlBaseTypeInt
 
   " Attribute
+  syn keyword idlNGH      ng_handle ng_event  ng_fallback ng_hash skipempty skipwhite nextgroup=idlROAttr,idlAttr
   syn keyword idlROAttr   readonly                          skipempty skipwhite nextgroup=idlAttr
   syn keyword idlAttr     attribute                         skipempty skipwhite nextgroup=idlBaseTypeInt,idlBaseType
 
@@ -76,24 +77,27 @@ try
   syn keyword idlBaseTypeInt contained short long           skipempty skipwhite nextgroup=idlSimpDecl
   syn keyword idlBaseType    contained unsigned             skipempty skipwhite nextgroup=idlBaseTypeInt
   syn region  idlD1          contained start="<" end=">"    skipempty skipwhite nextgroup=idlSimpDecl contains=idlString,idlLiteral
-  syn keyword idlBaseType    contained string               skipempty skipwhite nextgroup=idlD1,idlSimpDecl
+  syn keyword idlBaseType    contained string ng_privatesize skipempty skipwhite nextgroup=idlD1,idlSimpDecl
   syn match   idlBaseType    contained "[a-zA-Z0-9_]\+[ \t]*\(::[ \t]*[a-zA-Z0-9_]\+\)*"  skipempty skipwhite nextgroup=idlSimpDecl
 
   " Modules
-  syn region  idlModuleContent contained start="{" end="}"  skipempty skipwhite nextgroup=idlError,idlSemiColon contains=idlUnion,idlStruct,idlEnum,idlInterface,idlComment,idlTypedef,idlConst,idlException,idlModule
-  syn match   idlModuleName  contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlModuleContent,idlError,idlSemiColon
+  syn region  idlModuleContent contained start="{" end="}"  skipempty skipwhite nextgroup=idlError,idlSemiColon contains=idlUnion,idlStruct,idlEnum,idlInterface,idlNGJSClass,idlComment,idlTypedef,idlConst,idlException,idlModule,idlNGmodule,idlInclude,idlPreCondit
+  syn match   idlModuleName  contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlModuleContent,idlError,idlSemiColon,idlNGrefname
+  syn match   idlNGrefname   contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlSemiColon
   syn keyword idlModule      module                         skipempty skipwhite nextgroup=idlModuleName
+  syn keyword idlNGmodule    ng_modulename ng_reference     skipempty skipwhite nextgroup=idlModuleName
 
   " Interfaces
   syn cluster idlCommentable contains=idlComment
-  syn cluster idlContentCluster contains=idlUnion,idlStruct,idlEnum,idlROAttr,idlAttr,idlOp,idlOneWayOp,idlException,idlConst,idlTypedef,idlAttributes,idlErrorSquareBracket,idlErrorBracket,idlInterfaceSections
+  syn cluster idlContentCluster contains=idlUnion,idlStruct,idlEnum,idlROAttr,idlNGH,idlAttr,idlOp,idlOneWayOp,idlException,idlConst,idlTypedef,idlAttributes,idlErrorSquareBracket,idlErrorBracket,idlInterfaceSections
 
-  syn region  idlInterfaceContent contained start="{" end="}"   skipempty skipwhite nextgroup=idlError,idlSemiColon contains=@idlContentCluster,@idlCommentable
+  syn region  idlInterfaceContent contained start="{" end="}"   skipempty skipwhite nextgroup=idlError,idlSemiColon contains=@idlContentCluster,@idlCommentable,idlInclude,idlPreCondit
   syn match   idlInheritFrom2 contained ","                     skipempty skipwhite nextgroup=idlInheritFrom
   syn match   idlInheritFrom contained "[a-zA-Z0-9_]\+[ \t]*\(::[ \t]*[a-zA-Z0-9_]\+\)*" skipempty skipwhite nextgroup=idlInheritFrom2,idlInterfaceContent
   syn match   idlInherit contained ":"                            skipempty skipwhite nextgroup=idlInheritFrom
   syn match   idlInterfaceName contained "[a-zA-Z0-9_]\+"       skipempty skipwhite nextgroup=idlInterfaceContent,idlInherit,idlError,idlSemiColon
   syn keyword idlInterface     interface dispinterface          skipempty skipwhite nextgroup=idlInterfaceName
+  syn keyword idlNGJSClass     ng_jsclass ng_secured            skipempty skipwhite nextgroup=idlInterface
   syn keyword idlInterfaceSections contained properties methods skipempty skipwhite nextgroup=idlSectionColon,idlError
   syn match   idlSectionColon contained ":"
 
@@ -172,7 +176,7 @@ try
   syn keyword idlEnum     enum                             skipempty skipwhite nextgroup=idlEnumName,idlEnumContents
 
   " Typedef
-  syn keyword idlTypedef typedef                          skipempty skipwhite nextgroup=idlTypedefOtherTypeQualifier,idlDefBaseType,idlDefBaseTypeInt,idlDefSeqType,idlDefv1Enum,idlDefEnum,idlDefOtherType,idlDefAttributes,idlError
+  syn keyword idlTypedef typedef                           skipempty skipwhite nextgroup=idlTypedefOtherTypeQualifier,idlDefBaseType,idlDefBaseTypeInt,idlDefSeqType,idlDefv1Enum,idlDefEnum,idlDefOtherType,idlDefAttributes,idlError
 
   if !exists('idl_no_extensions')
     syn keyword idlTypedefOtherTypeQualifier contained struct enum interface nextgroup=idlDefBaseType,idlDefBaseTypeInt,idlDefSeqType,idlDefv1Enum,idlDefEnum,idlDefOtherType,idlDefAttributes,idlError skipwhite
@@ -268,7 +272,11 @@ try
     HiLink idlInterfaceContent    Paren
 
     HiLink idlSimpDecl            Identifier
+    HiLink idlNGrefname           Identifier
     HiLink idlROAttr              StorageClass
+    HiLink idlNGH                 SpecialComment
+    HiLink idlNGmodule            SpecialComment
+    HiLink idlNGJSClass           SpecialComment
     HiLink idlAttr                Keyword
     HiLink idlConst               StorageClass
 
@@ -285,9 +293,9 @@ try
     "HiLink idlCase               Keyword
     HiLink idlCaseLabel           Constant
 
-    HiLink idlErrorBracket        Error
-    HiLink idlErrorBrace          Error
-    HiLink idlErrorSquareBracket  Error
+   " HiLink idlErrorBracket        Error
+   " HiLink idlErrorBrace          Error
+   " HiLink idlErrorSquareBracket  Error
 
     HiLink idlImport              Keyword
     HiLink idlImportString        idlString
