@@ -5,7 +5,7 @@ if [ ! -e ~/.running ] || [ $[`date +%s` - `date +%s -r ~/.running`] -gt 600 ]; 
     touch ~/.running
     find . -name "dist" -prune  -o  -name ".git" -prune  -o -name "objs" -prune -o -type l -prune \
         -o \( -name "*.[ch]" -o -name "*.js" -o -name "*.json" -o -name "*.idl" \
-             -o -name "Makefile" -o -name "*.ini" -o -name "*.httpd" \
+             -o -name "Makefile" -o -name "*.mk" -o -name "*.ini" -o -name "*.httpd" \
            \) \
         -print > cscope.files
     cscope -kRb 
