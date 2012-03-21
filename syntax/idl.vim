@@ -85,7 +85,7 @@ try
   syn match   idlModuleName  contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlModuleContent,idlError,idlSemiColon,idlNGrefname
   syn match   idlNGrefname   contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlSemiColon
   syn keyword idlModule      module                         skipempty skipwhite nextgroup=idlModuleName
-  syn keyword idlNGmodule    ng_modulename ng_reference     skipempty skipwhite nextgroup=idlModuleName
+  syn keyword idlNGmodule    ng_modulename ng_reference ng_refobject skipempty skipwhite nextgroup=idlModuleName
 
   " Interfaces
   syn cluster idlCommentable contains=idlComment
@@ -97,7 +97,7 @@ try
   syn match   idlInherit contained ":"                            skipempty skipwhite nextgroup=idlInheritFrom
   syn match   idlInterfaceName contained "[a-zA-Z0-9_]\+"       skipempty skipwhite nextgroup=idlInterfaceContent,idlInherit,idlError,idlSemiColon
   syn keyword idlInterface     interface dispinterface          skipempty skipwhite nextgroup=idlInterfaceName
-  syn keyword idlNGJSClass     ng_jsclass ng_secured            skipempty skipwhite nextgroup=idlInterface
+  syn keyword idlNGJSClass     ng_jsclass ng_secured ng_webbehavior skipempty skipwhite nextgroup=idlInterface
   syn keyword idlInterfaceSections contained properties methods skipempty skipwhite nextgroup=idlSectionColon,idlError
   syn match   idlSectionColon contained ":"
 
@@ -140,7 +140,7 @@ try
   syn keyword idlContext    contained context              skipempty skipwhite nextgroup=idlRaises,idlContext,idlError,idlSemiColon
 
   " Operation
-  syn match   idlParmList   contained ","                  skipempty skipwhite nextgroup=idlOpParms
+  syn match   idlParmList   contained ","                  skipempty skipwhite nextgroup=idlOpParms,idlParmType
   syn region  idlArraySize  contained start="\[" end="\]"  skipempty skipwhite nextgroup=idlArraySize,idlParmList contains=idlArraySize,idlLiteral
   syn match   idlParmName   contained "[a-zA-Z0-9_]\+"     skipempty skipwhite nextgroup=idlParmList,idlArraySize
   syn keyword idlParmInt    contained short long           skipempty skipwhite nextgroup=idlParmName
