@@ -22,7 +22,7 @@ fi
 
 # try git before svn 
 if [ -n "$(which git)" ]; then
-    if [ -d .git ]; then 
+    if [ -d .git -o -e .here ]; then 
         pwd
         exit 0
     fi

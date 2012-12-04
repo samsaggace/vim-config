@@ -9,8 +9,6 @@ let $PATH = $PATH . ':' . $HOME . '/.vim/scripts'
 "Color and font
 so $VIMRUNTIME/colors/desert.vim
 
-set guifont=Monospace\ 9
-
 " Font
 set gfn=Monospace\ 9
 
@@ -30,7 +28,6 @@ set bs=2
 
 "No warning when existing swap file is found.
 set shortmess+=A 
-
 "Show the current edition mode on last line, number of column and line
 set showmode
 set ruler
@@ -67,7 +64,8 @@ let c_comment_strings=1
 
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-set listchars+=tab:\|-
+set list listchars=tab:‣ ,trail:·,nbsp:→,extends:↷,precedes:↶
+au BufWritePre * :%s/ / /gce
 
 "---------------------------------------------------------------------------
 " Mapping
@@ -93,6 +91,7 @@ map ,c            :set filetype=c<CR>
 map ,z            :set filetype=zsh<CR>
 map ,m            :set filetype=make<CR>
 map ,t            :!tal<CR>
+map ,r            :redraw!<CR>
 
 " --------------------------------------------------------------------------
 " Cscope
@@ -202,6 +201,7 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1 
 let g:miniBufExplMapCTabSwitchBufs = 1 
 let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMaxSize = 1
 
 " Do not save modified buffer when switching
 set hidden
@@ -267,7 +267,8 @@ let g:netrw_alto = 1
 " Doxygen syntax and toolkit
 let g:load_doxygen_syntax=1
 let g:DoxygenToolkit_compactDoc="yes"
-let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let doxygen_end_punctuation='¤'
+"let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
 set formatoptions+=ro
 
 map ,d           :Dox<CR>
@@ -302,13 +303,15 @@ au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_e Tag
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent call Show80col(1)
 
+au bufnewfile,bufread *.js runtime syntax/doxygen.vim
+
 "Update tags and syntax highlighting at each save
 au BufWritePost *.c,*.h,*.js* Tags
 au BufWritePost *.c,*.h,*.js* silent cs reset
 au BufWritePost *.c,*.h syntax clear
 au BufWritePost *.c,*.h silent! so tags_hl
 au BufWritePost *.c,*.h runtime syntax/c.vim
-au BufWritePost *.c,*.h runtime syntax/doxygen.vim
+au BufWritePost *.c,*.h,*.js runtime syntax/doxygen.vim
 
 autocmd BufRead *.json set ft=javascript
 

@@ -996,6 +996,7 @@ function! <SID>ResizeWindow()
     endif
 
   endif
+  exec('set winfixheight')
   
 endfunction
 
