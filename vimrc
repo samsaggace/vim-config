@@ -92,6 +92,8 @@ map ,z            :set filetype=zsh<CR>
 map ,m            :set filetype=make<CR>
 map ,t            :!tal<CR>
 map ,r            :redraw!<CR>
+map ,i            :set diffopt+=iwhite<CR>
+map ,w            :set diffopt-=iwhite<CR>
 
 " --------------------------------------------------------------------------
 " Cscope
@@ -287,8 +289,8 @@ au FileType make,python
 set noeol
 
 "Compilation in vim
-command -complete=dir -nargs=+ Make silent make -C <args> | cwindow 15
-command -nargs=0 Maka silent make | cwindow 15
+command -complete=dir -nargs=+ Make silent make V=1 -C <args> | cwindow 15
+command -nargs=0 Maka silent make V=1 | cwindow 15
 "Mapping to close auto open cwindow (<C-W>c works only if focus on cwindow)
 map <C-W>u        :cclose<CR>
 map <C-W><C-U>    :cclose<CR>
