@@ -297,11 +297,18 @@ map <C-W><C-U>    :cclose<CR>
 
 command -nargs=0 Tags silent execute "!tags.sh &" 
 
+function HT(path)
+    for line in readfile(a:path)
+        execute line
+    endfor
+endfunction
+
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_f Function
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight c_t gui=bold,italic
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_d Tag
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_m Tag
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_e Tag
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! call HT("tags_hl")
 au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent call Show80col(1)
 
@@ -311,7 +318,8 @@ au bufnewfile,bufread *.js runtime syntax/doxygen.vim
 au BufWritePost *.c,*.h,*.js* Tags
 au BufWritePost *.c,*.h,*.js* silent cs reset
 au BufWritePost *.c,*.h syntax clear
-au BufWritePost *.c,*.h silent! so tags_hl
+"au BufWritePost *.c,*.h silent! so tags_hl
+"au BufWritePost *.c,*.h silent! call HT("tags_hl")
 au BufWritePost *.c,*.h runtime syntax/c.vim
 au BufWritePost *.c,*.h,*.js runtime syntax/doxygen.vim
 
