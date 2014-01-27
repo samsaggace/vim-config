@@ -38,7 +38,9 @@ set ls=2
 set mousemodel=popup_setpos
 
 " Set indentation corresponding to filetype
+filetype on
 filetype indent on
+filetype plugin on
 
 " Make command line two lines high
 "set ch=2
