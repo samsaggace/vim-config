@@ -122,26 +122,29 @@ function! Cscope_init()
         cs add cscope.out
         set csverb
 
+        let g:cscope_database = "cscope.out"
+        let g:cscope_relative_path = "."
+
         " Using 'CTRL-AltGr \' then a search type makes the vim window
         " "shell-out", with search results displayed on the bottom
 
-        nmap <C-\>s  :cs find s <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-\>g  :cs find g <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-\>c  :cs find c <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-\>t  :cs find t <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-\>e  :cs find e <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-\>f  :cs find f <C-R>=expand("<cfile>")<CR><CR>
-        nmap <C-\>i  :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        nmap <C-\>d  :cs find d <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>s  :AsyncCscopeFindX s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>g  :AsyncCscopeFindX g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>c  :AsyncCscopeFindX c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>t  :AsyncCscopeFindX t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>e  :AsyncCscopeFindX e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>f  :AsyncCscopeFindX f <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-\>i  :AsyncCscopeFindX i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nmap <C-\>d  :AsyncCscopeFindX d <C-R>=expand("<cword>")<CR><CR>
 
-        vmap <C-\>s  <Esc>:cs find s <C-R>*<CR>
-        vmap <C-\>g  <Esc>:cs find g <C-R>*<CR>
-        vmap <C-\>c  <Esc>:cs find c <C-R>*<CR>
-        vmap <C-\>t  <Esc>:cs find t <C-R>*<CR>
-        vmap <C-\>e  <Esc>:cs find e <C-R>*<CR>
-        vmap <C-\>f  <Esc>:cs find f <C-R>*<CR>
-        vmap <C-\>i  <Esc>:cs find i <C-R>*<CR>
-        vmap <C-\>d  <Esc>:cs find d <C-R>*<CR> 
+        vmap <C-\>s  <Esc>:AsyncCscopeFindX s <C-R>*<CR>
+        vmap <C-\>g  <Esc>:AsyncCscopeFindX g <C-R>*<CR>
+        vmap <C-\>c  <Esc>:AsyncCscopeFindX c <C-R>*<CR>
+        vmap <C-\>t  <Esc>:AsyncCscopeFindX t <C-R>*<CR>
+        vmap <C-\>e  <Esc>:AsyncCscopeFindX e <C-R>*<CR>
+        vmap <C-\>f  <Esc>:AsyncCscopeFindX f <C-R>*<CR>
+        vmap <C-\>i  <Esc>:AsyncCscopeFindX i <C-R>*<CR>
+        vmap <C-\>d  <Esc>:AsyncCscopeFindX d <C-R>*<CR> 
         " Using 'CTRL-AltGr ^' then a search type makes the vim window
         " split horizontally, with search result displayed in
         " the new window.
