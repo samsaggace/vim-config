@@ -317,11 +317,11 @@ au bufnewfile,bufread *.js runtime syntax/doxygen.vim
 "Update tags and syntax highlighting at each save
 au BufWritePost *.c,*.h,*.js* Tags
 au BufWritePost *.c,*.h,*.js* silent cs reset
-au BufWritePost *.c,*.h syntax clear
+"au BufWritePost *.c,*.h syntax clear
 "au BufWritePost *.c,*.h silent! so tags_hl
 "au BufWritePost *.c,*.h silent! call HT("tags_hl")
-au BufWritePost *.c,*.h runtime syntax/c.vim
-au BufWritePost *.c,*.h,*.js runtime syntax/doxygen.vim
+"au BufWritePost *.c,*.h runtime syntax/c.vim
+"au BufWritePost *.c,*.h,*.js runtime syntax/doxygen.vim
 
 autocmd BufRead *.json set ft=javascript
 
