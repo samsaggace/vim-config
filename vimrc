@@ -158,6 +158,7 @@ function! Cscope_init()
         nmap <C-^>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
         nmap <C-^>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
+        cnoreabbrev acsf AsyncCscopeFindX
     endif
 endfunction
 
