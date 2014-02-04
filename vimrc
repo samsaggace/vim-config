@@ -5,6 +5,11 @@
 "Add scripts to path :
 let $PATH = $PATH . ':' . $HOME . '/.vim/scripts'
 
+if !has('clientserver')
+    "Disable asynccommand to avoid error message
+    let g:loaded_asynccommand = 0
+endif
+
 "-------------------------------------------------------------------------
 "Color and font
 so $VIMRUNTIME/colors/desert.vim
