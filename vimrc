@@ -294,7 +294,7 @@ au FileType *
             \ set softtabstop=4 expandtab
          
 au FileType make,python
-            \ set noexpandtab
+            \ set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
          
 " Remove newline added by vim automatically at end-of-file
 set noeol
@@ -364,3 +364,19 @@ au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /^\
 
 " Show spaces used for indenting (so you use only tabs for indenting).
 "match ExtraWhitespace /^\t*\zs \+/
+
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
+"Write files with sudo :W
+command W w !sudo tee % > /dev/null
