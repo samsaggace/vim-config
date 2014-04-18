@@ -5,3 +5,7 @@ Features :
 - Omnicompletion
 - Synthax highlighting and functions highlighting
 
+Install :
+    git clone git@gitlab:sch/vim-config.git ~/.vim
+    ln -s ~/.vim/vimrc ~/.vimrc
+
