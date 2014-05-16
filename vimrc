@@ -379,4 +379,5 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 "Write files with sudo :W
-command W w !sudo tee % > /dev/null
+command W :execute ':w !sudo tee % > /dev/null' | :edit!
+command Wq :execute ':W' | :q
