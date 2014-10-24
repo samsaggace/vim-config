@@ -295,7 +295,9 @@ au FileType *
          
 au FileType make,python
             \ set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
-         
+
+au BufNewFile,BufRead *.lkc set ft=kconfig
+
 " Remove newline added by vim automatically at end-of-file
 set noeol
 
