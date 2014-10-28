@@ -6,6 +6,6 @@ Features :
 - Synthax highlighting and functions highlighting
 
 Install :
-    git clone git@gitlab:sch/vim-config.git ~/.vim
-    ln -s ~/.vim/vimrc ~/.vimrc
+git clone https://sebastien_chemin@bitbucket.org/sebastien_chemin/vim-config.git ~/.vim
+ln -s ~/.vim/vimrc ~/.vimrc
 
