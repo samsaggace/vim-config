@@ -12,13 +12,14 @@ endif
 
 "-------------------------------------------------------------------------
 "Color and font
-so $VIMRUNTIME/colors/desert.vim
+colorscheme desert
 
 " Font
 set gfn=Monospace\ 9
 
 " enable syntax highlighting
 syntax on
+highlight DiffText term=standout guifg=NONE guibg=Black gui=NONE cterm=standout ctermbg=NONE
 
 "Disable printer
 set printexpr=
@@ -225,8 +226,6 @@ set hidden
 if &diff
     au BufWritePost * diffupdate
 endif
-
-highlight DiffText guifg=black 
 
 
 "---------------------------------------------------------------------------
