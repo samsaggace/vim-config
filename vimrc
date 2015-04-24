@@ -354,6 +354,21 @@ autocmd BufRead,BufNewFile *.js set cinoptions-=:0
 
 autocmd BufRead,BufNewFile COMMIT_EDITMSG set spell
 
+
+function! CheckCommit()
+    let contents=getline(1,"$")
+    if match(contents,"debugger") >= 0
+        if input("Commit contains forbidden keyword ! Continue ? (y/n) ") == "y"
+            echo "OK..."
+        else
+            throw "No debugger in commits !!"
+        endif
+    endif
+endfunction
+
+"Useful warning to avoid commiting debugger keyword in js files 
+au BufWritePre COMMIT_EDITMSG call CheckCommit()
+
 " Show trailing whitespace:
 au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$/
 " Show trailing whitepace and spaces before a tab:
