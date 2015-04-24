@@ -75,6 +75,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.i
 set list listchars=tab:‣ ,trail:·,nbsp:→,extends:↷,precedes:↶
 au BufWritePre * :%s/ / /gce
 
+"Use standard copy/paste register
+set clipboard=unnamedplus
 "---------------------------------------------------------------------------
 " Mapping
 map <F2>          :call Show80col(-1)<CR>
