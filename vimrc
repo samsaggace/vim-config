@@ -73,7 +73,7 @@ let c_comment_strings=1
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 set list listchars=tab:‣ ,trail:·,nbsp:→,extends:↷,precedes:↶
-au BufWritePre * :%s/ / /gce
+"au BufWritePre * :%s/ / /gce
 
 "Use standard copy/paste register
 set clipboard=unnamedplus
@@ -174,7 +174,7 @@ endfunction
 "--------------------------------------------------------------------------
 " Omnicompletion, needs tags
 set omnifunc=ccomplete#Complete
-set shiftwidth=4 softtabstop=4 tabstop=8 expandtab
+set shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 set completeopt=menuone,longest,preview
 
 set tags+=./tags
@@ -292,12 +292,14 @@ noremap K K<CR>
 "-------------------------------------------------------------------------
 " force use of tabs in Makefiles and python
 au FileType *
-            \ set softtabstop=4 expandtab
+            \ setlocal softtabstop=4 expandtab
          
 au FileType make,python
-            \ set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+            \ setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
 au BufNewFile,BufRead *.lkc set ft=kconfig
+
+au FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " Remove newline added by vim automatically at end-of-file
 set noeol
