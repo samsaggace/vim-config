@@ -2,6 +2,54 @@
 "# VIM CONFIGURATION #
 "#####################
 
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'elzr/vim-json'
+Plugin 'solarnz/thrift.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+
 "Add scripts to path :
 let $PATH = $PATH . ':' . $HOME . '/.vim/scripts'
 
@@ -173,7 +221,7 @@ endfunction
 
 "--------------------------------------------------------------------------
 " Omnicompletion, needs tags
-set omnifunc=ccomplete#Complete
+"set omnifunc=ccomplete#Complete
 set shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 set completeopt=menuone,longest,preview
 
@@ -288,7 +336,7 @@ set formatoptions+=ro
 map ,d           :Dox<CR>
 
 
-noremap K K<CR>
+"noremap K K<CR>
 "-------------------------------------------------------------------------
 " force use of tabs in Makefiles and python
 au FileType *
@@ -338,8 +386,6 @@ au BufWritePost *.c,*.h,*.js* silent cs reset
 "au BufWritePost *.c,*.h silent! call HT("tags_hl")
 "au BufWritePost *.c,*.h runtime syntax/c.vim
 "au BufWritePost *.c,*.h,*.js runtime syntax/doxygen.vim
-
-autocmd BufRead *.json set ft=javascript
 
 let g:JSLintHighlightErrorLine = 1
 
