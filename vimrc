@@ -16,6 +16,11 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'elzr/vim-json'
 Plugin 'solarnz/thrift.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-fugitive'
+Plugin 'pangloss/vim-javascript'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
