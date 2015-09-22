@@ -15,12 +15,26 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'elzr/vim-json'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'solarnz/thrift.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
+Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'pangloss/vim-javascript'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'rking/ag.vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'toupeira/vim-desertink'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-endwise'
+Plugin 'fatih/vim-go'
+Plugin 'mhinz/vim-signify'
+
+
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -53,7 +67,14 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+"Disable auto json concealing of vim-json
+let g:vim_json_syntax_conceal = 0
 
+"Raimbow Parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 "Add scripts to path :
 let $PATH = $PATH . ':' . $HOME . '/.vim/scripts'
@@ -63,16 +84,26 @@ if !has('clientserver')
     let g:loaded_asynccommand = 0
 endif
 
+
+
 "-------------------------------------------------------------------------
 "Color and font
-colorscheme desert
+colorscheme desertink
+
+" Fugitive
+let g:statline_fugitive = 1
+let g:airline#extensions#hunks#enabled=1
+let g:airline#extensions#branch#enabled=1
+let g:airline_powerline_fonts = 1
+"let g:airline_theme='wombat'
 
 " Font
-set gfn=Monospace\ 9
+set gfn=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
 
 " enable syntax highlighting
-syntax on
 highlight DiffText term=standout guifg=NONE guibg=Black gui=NONE cterm=standout ctermbg=NONE
+syntax enable
+syntax sync fromstart
 
 "Disable printer
 set printexpr=
@@ -86,7 +117,7 @@ set nocompatible
 set bs=2
 
 "No warning when existing swap file is found.
-set shortmess+=A 
+set shortmess+=A
 "Show the current edition mode on last line, number of column and line
 set showmode
 set ruler
@@ -133,8 +164,8 @@ set clipboard=unnamedplus
 "---------------------------------------------------------------------------
 " Mapping
 map <F2>          :call Show80col(-1)<CR>
-map <F3>          :TlistUpdate<CR>
-map <F4>          :TlistToggle<CR>
+"map <F3>          :TlistUpdate<CR>
+map <F4>          :TagbarToggle<CR>
 map <F5>          ^i/* <C-[>$a */<C-[>
 map <F6>          ^3x$2h3x
 map <F7>          :bdelete<CR>
@@ -167,19 +198,18 @@ function! Cscope_init()
         set csto=0
         set cst
         set nocsverb
-        "cd  /usr/local/home/sch/nsv-tangox
-        let dir=system('vc-find-rootfolder')
-
-        if !v:shell_error
-            execute "cd " . dir
-        elseif filereadable("cscope.out")
-            cd .
-        elseif ($DIR != "")
-            cd $DIR
+"        let dir=system('vc-find-rootfolder')
+"
+"        if !v:shell_error
+"            execute "cd " . dir
+"        elseif filereadable("cscope.out")
+"            cd .
+"        elseif ($DIR != "")
+"            cd $DIR
         "else
          "   let dir = input("Please specify workset dir :", ".", "dir")
           "  execute "cd " . dir
-        endif
+        "endif
         cs add cscope.out
         set csverb
 
@@ -205,7 +235,7 @@ function! Cscope_init()
         vmap <C-\>e  <Esc>:AsyncCscopeFindX e <C-R>*<CR>
         vmap <C-\>f  <Esc>:AsyncCscopeFindX f <C-R>*<CR>
         vmap <C-\>i  <Esc>:AsyncCscopeFindX i <C-R>*<CR>
-        vmap <C-\>d  <Esc>:AsyncCscopeFindX d <C-R>*<CR> 
+        vmap <C-\>d  <Esc>:AsyncCscopeFindX d <C-R>*<CR>
         " Using 'CTRL-AltGr ^' then a search type makes the vim window
         " split horizontally, with search result displayed in
         " the new window.
@@ -226,7 +256,7 @@ endfunction
 
 "--------------------------------------------------------------------------
 " Omnicompletion, needs tags
-"set omnifunc=ccomplete#Complete
+set omnifunc=syntaxcomplete#Complete
 set shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 set completeopt=menuone,longest,preview
 
@@ -249,7 +279,7 @@ inoremap <Tab> <C-R>=InsertTabWrapper("forward")<cr>
 inoremap <s-tab> <C-R>=InsertTabWrapper("backward")<cr>
 inoremap <leader><Tab> <Tab>
 
-"Completion in commands like 
+"Completion in commands like
 cnoremap <Tab> <C-L><C-D>
 
 
@@ -257,20 +287,20 @@ cnoremap <Tab> <C-L><C-D>
 function CallGitGuiBlame()
     let file = bufname('%')
     let line = line('.')
-    echo 'Calling git gui blame for' . file . ' at line ' . line 
-    execute '!git gui blame  --line=' . line . ' ' . file . ' &' 
+    echo 'Calling git gui blame for' . file . ' at line ' . line
+    execute '!git gui blame  --line=' . line . ' ' . file . ' &'
 endfunction
 
 command -nargs=0 GGB call CallGitGuiBlame()
-map <Leader>b :GGB<CR> 
+map <Leader>b :GGB<CR>
 
 " Mini buffer explorer plugin
 " -------------------------------------------------------------------------
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMaxSize = 1
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplMaxSize = 1
 
 " Do not save modified buffer when switching
 set hidden
@@ -314,12 +344,12 @@ endfunction
 "---------------------------------------------------------------------------
 "Rename plugin
 
-noremap <Leader>rc :call Renamec()<CR> 
-noremap <Leader>rf :call Renamef()<CR> 
+noremap <Leader>rc :call Renamec()<CR>
+noremap <Leader>rf :call Renamef()<CR>
 
 "---------------------------------------------------------------------------
 "Switch buffer
-if !&diff 
+if !&diff
     map <C-PageUp> :bN<CR>
     map <C-PageDown> :bn<CR>
 endif
@@ -346,7 +376,7 @@ map ,d           :Dox<CR>
 " force use of tabs in Makefiles and python
 au FileType *
             \ setlocal softtabstop=4 expandtab
-         
+
 au FileType make,python
             \ setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
@@ -364,7 +394,7 @@ command -nargs=0 Maka silent make V=1 | cwindow 15
 map <C-W>u        :cclose<CR>
 map <C-W><C-U>    :cclose<CR>
 
-command -nargs=0 Tags silent execute "!tags.sh &" 
+command -nargs=0 Tags silent execute "!tags.sh &"
 
 function HT(path)
     for line in readfile(a:path)
@@ -419,7 +449,7 @@ function! CheckCommit()
     endif
 endfunction
 
-"Useful warning to avoid commiting debugger keyword in js files 
+"Useful warning to avoid commiting debugger keyword in js files
 au BufWritePre COMMIT_EDITMSG call CheckCommit()
 
 " Show trailing whitespace:
@@ -430,7 +460,7 @@ au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s
 au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /[^\t]\zs\t\+/
 " Show indent using tab
 au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /^\t\+/
-"Show > 80 col 
+"Show > 80 col
 "au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\%>80v.\+/
 
 " Show spaces used for indenting (so you use only tabs for indenting).
