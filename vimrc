@@ -35,6 +35,7 @@ Plugin 'fatih/vim-go'
 Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/rename.vim'
 Plugin 'idbrii/AsyncCommand'
+Plugin 'Yggdroot/vim-mark'
 
 
 " The following are examples of different formats supported.
