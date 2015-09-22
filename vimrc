@@ -34,6 +34,7 @@ Plugin 'tpope/vim-endwise'
 Plugin 'fatih/vim-go'
 Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/rename.vim'
+Plugin 'idbrii/AsyncCommand'
 
 
 " The following are examples of different formats supported.
