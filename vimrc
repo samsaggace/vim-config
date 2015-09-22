@@ -33,7 +33,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
 Plugin 'fatih/vim-go'
 Plugin 'mhinz/vim-signify'
-
+Plugin 'vim-scripts/rename.vim'
 
 
 " The following are examples of different formats supported.
