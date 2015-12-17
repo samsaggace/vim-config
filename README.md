@@ -13,6 +13,6 @@ Features :
 
 Install :
 ```sh
-git clone https://github.com/samsaggace/vim-config.git ~/.vim
+git clone --recursive https://github.com/samsaggace/vim-config.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ```
