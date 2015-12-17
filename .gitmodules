@@ -1,0 +1,75 @@
+[submodule "bundle/vim-desertink"]
+    path = bundle/vim-desertink
+    url = https://github.com/toupeira/vim-desertink.git
+[submodule "bundle/vim-javascript"]
+    path = bundle/vim-javascript
+    url = https://github.com/pangloss/vim-javascript.git
+[submodule "bundle/Vundle.vim"]
+    path = bundle/Vundle.vim
+    url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "bundle/tagbar"]
+    path = bundle/tagbar
+    url = https://github.com/majutsushi/tagbar.git
+[submodule "bundle/vim-signify"]
+    path = bundle/vim-signify
+    url = https://github.com/mhinz/vim-signify.git
+[submodule "bundle/syntastic"]
+    path = bundle/syntastic
+    url = https://github.com/scrooloose/syntastic.git
+[submodule "bundle/rename.vim"]
+    path = bundle/rename.vim
+    url = https://github.com/vim-scripts/rename.vim.git
+[submodule "bundle/Mark"]
+    path = bundle/Mark
+    url = https://github.com/vim-scripts/Mark.git
+[submodule "bundle/nerdcommenter"]
+    path = bundle/nerdcommenter
+    url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/vim-colors-solarized"]
+    path = bundle/vim-colors-solarized
+    url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/vim-mark"]
+    path = bundle/vim-mark
+    url = https://github.com/Yggdroot/vim-mark.git
+[submodule "bundle/vim-go"]
+    path = bundle/vim-go
+    url = https://github.com/fatih/vim-go.git
+[submodule "bundle/delimitMate"]
+    path = bundle/delimitMate
+    url = https://github.com/Raimondi/delimitMate.git
+[submodule "bundle/ag.vim"]
+    path = bundle/ag.vim
+    url = https://github.com/rking/ag.vim.git
+[submodule "bundle/vim-ruby"]
+    path = bundle/vim-ruby
+    url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "bundle/php.vim"]
+    path = bundle/php.vim
+    url = https://github.com/StanAngeloff/php.vim.git
+[submodule "bundle/vim-fugitive"]
+    path = bundle/vim-fugitive
+    url = https://github.com/tpope/vim-fugitive.git
+[submodule "bundle/rainbow_parentheses.vim"]
+    path = bundle/rainbow_parentheses.vim
+    url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/thrift.vim"]
+    path = bundle/thrift.vim
+    url = https://github.com/solarnz/thrift.vim.git
+[submodule "bundle/Dockerfile.vim"]
+    path = bundle/Dockerfile.vim
+    url = https://github.com/ekalinin/Dockerfile.vim.git
+[submodule "bundle/vim-endwise"]
+    path = bundle/vim-endwise
+    url = https://github.com/tpope/vim-endwise.git
+[submodule "bundle/vim-json"]
+    path = bundle/vim-json
+    url = https://github.com/elzr/vim-json.git
+[submodule "bundle/AsyncCommand"]
+    path = bundle/AsyncCommand
+    url = https://github.com/idbrii/AsyncCommand.git
+[submodule "bundle/vim-airline"]
+    path = bundle/vim-airline
+    url = https://github.com/bling/vim-airline.git
+[submodule "bundle/minibufexpl.vim"]
+    path = bundle/minibufexpl.vim
+    url = https://github.com/fholgado/minibufexpl.vim.git
