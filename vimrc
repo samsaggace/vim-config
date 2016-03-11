@@ -429,6 +429,8 @@ au BufWritePost *.c,*.h,*.js* silent cs reset
 
 let g:JSLintHighlightErrorLine = 1
 
+let g:sql_type_default = 'pgsql'
+
 map <C-\>r :silent call MyGrep(expand("<cword>"), '')<CR>
 
 function MyGrep(pattern, path)
