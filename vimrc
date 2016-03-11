@@ -36,6 +36,9 @@ Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/rename.vim'
 Plugin 'idbrii/AsyncCommand'
 Plugin 'vim-scripts/Mark'
+Plugin 'rodjek/vim-puppet'
+Plugin 'honza/vim-snippets'
+Plugin 'exu/pgsql.vim'
 
 
 " The following are examples of different formats supported.
