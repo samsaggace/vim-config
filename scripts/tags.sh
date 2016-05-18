@@ -5,7 +5,7 @@ if [ ! -e ~/.tags_running ] || [ $[`date +%s` - `date +%s -r ~/.tags_running`] -
     touch ~/.tags_running
     #git grep --cached -Ile '' > cscope.files
     #if [ $? -ne 0 ]; then
-        find . -name "build" -prune -o -name "pgsql0" -prune -o -name "pgsql_token0" -prune \
+        find . -name "build"  -prune -o -name "vendor" -prune -o -name "pgsql0" -prune -o -name "pgsql_token0" -prune \
             -o -type l -prune -o -name "cscope*" -prune \
             -o \( -name "*.[ch]" -o -name "*.[ch]pp" -o -name "*.js" -o -name "*.json" -o -name "*.idl" \
             -o -name "Makefile" -o -name "*.mk" -o -name "*.ini" -o -name "*.httpd"  -o -name "*.php" \
