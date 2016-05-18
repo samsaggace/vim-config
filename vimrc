@@ -21,7 +21,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-fugitive'
+Plugin 'samsaggace/vim-fugitive'
 Plugin 'pangloss/vim-javascript'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/syntastic'
@@ -39,7 +39,8 @@ Plugin 'vim-scripts/Mark'
 Plugin 'rodjek/vim-puppet'
 Plugin 'honza/vim-snippets'
 Plugin 'exu/pgsql.vim'
-
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'junegunn/vim-easy-align'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -113,6 +114,11 @@ syntax sync fromstart
 "Disable printer
 set printexpr=
 
+"Indent guide
+autocmd BufReadPre,FileReadPre * :IndentGuidesEnable
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+
 "-------------------------------------------------------------------------
 " Various
 "Allow special Vim improvements like multiple-undo
@@ -166,6 +172,12 @@ set list listchars=tab:‣ ,trail:·,nbsp:→,extends:↷,precedes:↶
 
 "Use standard copy/paste register
 set clipboard=unnamedplus
+
+" tell it to use an undo file
+set undofile
+" set a directory to store the undo history
+set undodir=$HOME/.vimundo/
+
 "---------------------------------------------------------------------------
 " Mapping
 map <F2>          :call Show80col(-1)<CR>
@@ -196,29 +208,21 @@ map ,w            :set diffopt-=iwhite<CR>
 
 " --------------------------------------------------------------------------
 " Cscope
-autocmd GUIEnter * call Cscope_init()
+autocmd BufReadPost,FileReadPost * call Cscope_init()
 function! Cscope_init()
     if has("cscope")
         " change this to 1 to search ctags DBs first
         set csto=0
         set cst
-        set nocsverb
-"        let dir=system('vc-find-rootfolder')
-"
-"        if !v:shell_error
-"            execute "cd " . dir
+"        echo b:git_dir
+"        if exists('b:git_dir') && filereadable(b:git_dir.'/cscope.out')
+"            execute 'cs add ' . b:git_dir . '/cscope.out'
 "        elseif filereadable("cscope.out")
-"            cd .
-"        elseif ($DIR != "")
-"            cd $DIR
-        "else
-         "   let dir = input("Please specify workset dir :", ".", "dir")
-          "  execute "cd " . dir
-        "endif
-        cs add cscope.out
-        set csverb
+"            cs add cscope.out
+"        endif
 
-        let g:cscope_database = "cscope.out"
+        "For async command
+        let g:cscope_database = ".git/cscope.out"
         let g:cscope_relative_path = "."
 
         " Using 'CTRL-AltGr \' then a search type makes the vim window
@@ -265,7 +269,6 @@ set omnifunc=syntaxcomplete#Complete
 set shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 set completeopt=menuone,longest,preview
 
-set tags+=./tags
 
 "---------------------------------------------------------------------------
 " tab completion from tags or cscope
@@ -382,7 +385,7 @@ map ,d           :Dox<CR>
 au FileType *
             \ setlocal softtabstop=4 expandtab
 
-au FileType make,python
+au FileType make,python,sql
             \ setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
 au BufNewFile,BufRead *.lkc set ft=kconfig
@@ -399,7 +402,7 @@ command -nargs=0 Maka silent make V=1 | cwindow 15
 map <C-W>u        :cclose<CR>
 map <C-W><C-U>    :cclose<CR>
 
-command -nargs=0 Tags silent execute "!tags.sh &"
+"command -nargs=0 Tags silent execute "!tags.sh &"
 
 function HT(path)
     for line in readfile(a:path)
@@ -407,20 +410,20 @@ function HT(path)
     endfor
 endfunction
 
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_f Function
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight c_t gui=bold,italic
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_d Tag
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_m Tag
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_e Tag
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_f Function
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight c_t gui=bold,italic
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_d Tag
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_m Tag
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent highlight link c_e Tag
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! call HT("tags_hl")
-au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
+"au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent! so tags_hl
 "au bufnewfile,bufread *.c,*.h,*.cpp,*.patch    silent call Show80col(1)
 
-au bufnewfile,bufread *.js runtime syntax/doxygen.vim
+"au bufnewfile,bufread *.js runtime syntax/doxygen.vim
 
 "Update tags and syntax highlighting at each save
-au BufWritePost *.c,*.h,*.js* Tags
-au BufWritePost *.c,*.h,*.js* silent cs reset
+"au BufWritePost *.c,*.h,*.js* Tags
+"au BufWritePost *.c,*.h,*.js* silent cs reset
 "au BufWritePost *.c,*.h syntax clear
 "au BufWritePost *.c,*.h silent! so tags_hl
 "au BufWritePost *.c,*.h silent! call HT("tags_hl")
@@ -459,19 +462,22 @@ endfunction
 "Useful warning to avoid commiting debugger keyword in js files
 au BufWritePre COMMIT_EDITMSG call CheckCommit()
 
-" Show trailing whitespace:
-au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$/
-" Show trailing whitepace and spaces before a tab:
-au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$\| \+\ze\t/
-" Show tabs that are not at the start of a line:
-au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /[^\t]\zs\t\+/
-" Show indent using tab
-au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /^\t\+/
-"Show > 80 col
-"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\%>80v.\+/
-
+"" Show trailing whitespace:
+"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$/
+"" Show trailing whitepace and spaces before a tab:
+"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\s\+$\| \+\ze\t/
+"" Show tabs that are not at the start of a line:
+"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /[^\t]\zs\t\+/
+"" Show indent using tab
+"au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /^\t\+/
+""Show > 80 col
+""au BufRead,BufNewFile,BufWritePost *.c,*.h,*.js syntax match ExtraWhitespace /\%>80v.\+/
+"
 " Show spaces used for indenting (so you use only tabs for indenting).
 "match ExtraWhitespace /^\t*\zs \+/
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
 
 
 " Search for selected text, forwards or backwards.
