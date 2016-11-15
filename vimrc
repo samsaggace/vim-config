@@ -41,6 +41,26 @@ Plugin 'honza/vim-snippets'
 Plugin 'exu/pgsql.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'Rykka/riv.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'https://github.schibsted.io/sion-leroux/vim-blocket'
+
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+"" YouCompleteMe
+let g:ycm_key_list_previous_completion=['<Up>']
+
+"" Ultisnips
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsListSnippets="<c-s-tab>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -114,6 +134,9 @@ set gfn=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
 highlight DiffText term=standout guifg=NONE guibg=Black gui=NONE cterm=standout ctermbg=NONE
 syntax enable
 syntax sync fromstart
+
+"change SpellCap color
+highlight SpellCap guisp=Magenta
 
 "Disable printer
 set printexpr=
