@@ -128,7 +128,7 @@ let g:airline_powerline_fonts = 1
 "let g:airline_theme='wombat'
 
 " Font
-set gfn=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
+set gfn=DejaVu\ Sans\ Mono\ for\ Powerline:h10
 
 " enable syntax highlighting
 highlight DiffText term=standout guifg=NONE guibg=Black gui=NONE cterm=standout ctermbg=NONE
@@ -522,3 +522,12 @@ vnoremap <silent> # :<C-U>
 "Write files with sudo :W
 command W :execute ':w !sudo tee % > /dev/null' | :edit!
 command Wq :execute ':W' | :q
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
